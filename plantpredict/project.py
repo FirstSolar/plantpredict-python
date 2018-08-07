@@ -1,7 +1,9 @@
 import requests
+import json
 from plantpredict import settings
 from plantpredict.plant_predict_entity import PlantPredictEntity
 from plantpredict.error_handlers import handle_refused_connection, handle_error_response
+from plantpredict.utilities import convert_json, camel_to_snake
 
 
 class Project(PlantPredictEntity):
@@ -14,16 +16,14 @@ class Project(PlantPredictEntity):
                standard_offset_from_utc=None):
         """HTTP Request: POST /Project
 
-        Creates a new :py:class:`~plantpredict.Project` entity in PlantPredict and assigns the uid of the newly created
-        :py:class:`~plantpredict.Project` to :py:attr:`~self.id` in the local object instance. Any attributes (including
-        but not limited to those also assignable via the inputs to this method) assigned prior to calling this method
-        will be recorded in the new :py:class:`~plantpredict.Project` entity in PlantPredict. The input variables to
-        this method are those required for successful :py:class:`~plantpredict.Project` creation.
+        Creates a new Project entity in PlantPredict and assigns the uid of the newly created Project` to self.id in
+        the local object instance. Any attributes (including but not limited to those also assignable via the inputs to
+        this method) assigned prior to calling this method will be recorded in the new Project entity in PlantPredict.
+        The input variables to this method are those required for successful Project creation.
 
-        The following variables can be obtained via the methods belonging to :py:class:`~plantpredict.Geo`: country
-        and country_code (:py:meth:`~plantpredict.Geo.get_location_info`), elevation
-        (:py:meth:`~plantpredict.Geo.get_elevation`), and standard_offset_from_utc
-        (:py:meth:`~plantpredict.Geo.get_timezone`).
+        The following variables can be obtained via the methods belonging to plantpredict.Geo: country
+        and country_code (plantpredict.Geo.get_location_info), elevation (plantpredict.Geo.get_elevation), and
+        standard_offset_from_utc (plantpredict.Geo.get_timezone).
 
         :param name: The name of the Project.
         :type name: str
@@ -61,7 +61,7 @@ class Project(PlantPredictEntity):
         """HTTP Request: DELETE /Project/{ProjectId}
 
         Deletes an existing Project entity in PlantPredict. The local instance of the Project entity must have
-        attribute :py:attr:`~self.id` identical to the project id of the Project to be deleted.
+        attribute self.id identical to the project id of the Project to be deleted.
 
         :return: A dictionary {"is_successful": True}.
         :rtype: dict
@@ -117,8 +117,6 @@ class Project(PlantPredictEntity):
         )
 
     @staticmethod
-    @handle_refused_connection
-    @handle_error_response
     def search(latitude, longitude, search_radius=1.0):
         """HTTP Request: GET /Project/Search
 
@@ -132,14 +130,20 @@ class Project(PlantPredictEntity):
         :type search_radius: float
         :return: int, float
         """
-
-        return requests.get(
+        response = requests.get(
             url=settings.BASE_URL + "/Project/Search",
             headers={"Authorization": "Bearer " + settings.TOKEN},
             params={'latitude': latitude, 'longitude': longitude, 'searchRadius': search_radius}
         )
 
-    def __init__(self):
+        project_list = json.loads(response.content)
+
+        return [convert_json(p, camel_to_snake) for p in project_list]
+
+    def __init__(self, id=None):
+        if id:
+            self.id = id
+
         self.name = None
         self.latitude = None
         self.longitude = None

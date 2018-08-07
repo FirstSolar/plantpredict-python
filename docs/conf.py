@@ -3,7 +3,7 @@
 # plantpredict-python documentation build configuration file, created by
 # sphinx-quickstart on Wed Jun 27 17:20:14 2018.
 #
-# This file is execfile()d with the current directory set to its
+# This file is execfile() with the current directory set to its
 # containing dir.
 #
 # Note that not all possible configuration values are present in this

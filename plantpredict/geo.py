@@ -1,11 +1,8 @@
 import requests
 from plantpredict import settings
-from plantpredict.utilities import decorate_all_methods
 from plantpredict.error_handlers import handle_refused_connection, handle_error_response
 
-# TODO wrapper for static methods
-#@decorate_all_methods(handle_refused_connection)
-#@decorate_all_methods(handle_error_response)
+
 class Geo(object):
     """
     This API resource does not represent a database entity in PlantPredict. This is a simplified connection to the
@@ -13,6 +10,8 @@ class Geo(object):
     """
 
     @staticmethod
+    @handle_error_response
+    @handle_refused_connection
     def get_location_info(latitude, longitude):
         """GET /Geo/{Latitude}/{Longitude}/Location
 
@@ -34,6 +33,8 @@ class Geo(object):
         )
 
     @staticmethod
+    @handle_error_response
+    @handle_refused_connection
     def get_elevation(latitude, longitude):
         """GET /Geo/{Latitude}/{Longitude}/Elevation
 
@@ -50,6 +51,8 @@ class Geo(object):
         )
 
     @staticmethod
+    @handle_error_response
+    @handle_refused_connection
     def get_timezone(latitude, longitude):
         """GET /Geo/{Latitude}/{Longitude}/TimeZone
 

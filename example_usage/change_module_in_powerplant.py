@@ -26,5 +26,5 @@ new_module_id = 1645
 # in order to change the module in Block 1 --> Array 1 --> Inverter A --> DC Field 1,
 # nullify the previous module's data structure, replace the module id, and update the power plant
 power_plant.blocks[0]['arrays'][0]['inverters'][0]['dc_fields'][0]['module'] = None
-power_plant.blocks[0]['arrays'][0]['inverters'][0]['dc_fields'][0]['moduleId'] = new_module_id
+power_plant.blocks[0]['arrays'][0]['inverters'][0]['dc_fields'][0]['module_id'] = new_module_id
 power_plant.update()

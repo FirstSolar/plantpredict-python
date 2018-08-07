@@ -1,8 +1,6 @@
-import plantpredict
 import re
 
-# Not currently used.
-"""
+
 def decorate_all_methods(decorator):
     def decorate(cls):
         for attr in cls.__dict__:
@@ -10,7 +8,6 @@ def decorate_all_methods(decorator):
                 setattr(cls, attr, decorator(getattr(cls, attr)))
         return cls
     return decorate
-"""
 
 
 def camel_to_snake(key):
@@ -47,7 +44,13 @@ MANUAL_KEY_FIXES = {
         "ashraeiam": "ashrae_iam",
         "stcmpp": "stc_mpp",
         "a_c": "ac",
-        "u_t_c": "utc"
+        "u_t_c": "utc",
+        "g_h_i": "ghi",
+        "d_h_i": "dhi",
+        "d_n_i": "dni",
+        "poa_i": "poai",
+        "g_c_r": "gcr",
+        "bi_faciality": "bifaciality"
     },
     "snake_to_camel": {
         "powerplant": "powerPlant",

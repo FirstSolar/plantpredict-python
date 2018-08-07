@@ -1,5 +1,3 @@
-.. currentmodule:: plantpredict
-
 ################
 SDK Reference
 ################

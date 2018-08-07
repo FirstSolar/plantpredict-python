@@ -57,7 +57,7 @@ class Prediction(PlantPredictEntity):
 
         return super(Prediction, self).delete()
 
-    def get(self):
+    def get(self, id=None, project_id=None):
         """HTTP Request: GET /Project/{ProjectId}/Prediction/{Id}
 
         Retrieves an existing Prediction entity in PlantPredict and automatically assigns all of its attributes to the
@@ -68,6 +68,9 @@ class Prediction(PlantPredictEntity):
         :rtype: dict
 
         """
+        self.id = id if id is not None else self.id
+        self.project_id = project_id if project_id is not None else self.project_id
+
         self.get_url_suffix = "/Project/{}/Prediction/{}".format(self.project_id, self.id)
 
         return super(Prediction, self).get()
@@ -110,10 +113,6 @@ class Prediction(PlantPredictEntity):
 
         Runs the Prediction and waits for simulation to complete. The input variable "export_options" should take the
 
-        .. code-block:: python
-
-
-
         :param export_options: Contains options for exporting
         :return:
         """
@@ -121,7 +120,7 @@ class Prediction(PlantPredictEntity):
         response = requests.post(
             url=settings.BASE_URL + "/Project/{}/Prediction/{}/Run".format(self.project_id, self.id),
             headers={"Authorization": "Bearer " + settings.TOKEN},
-            json=convert_json(export_options, snake_to_camel)
+            json=convert_json(export_options, snake_to_camel) if export_options else None
         )
 
         # observes task queue to wait for prediction run to complete
@@ -218,9 +217,12 @@ class Prediction(PlantPredictEntity):
 
         return new_prediction_id
 
-    def __init__(self):
+    def __init__(self, id=None, project_id=None):
+        if id:
+            self.id = id
+        self.project_id = project_id
+
         self.name = None
-        self.project_id = None
         self.status = None
         self.year_repeater = None
 
