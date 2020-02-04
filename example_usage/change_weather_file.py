@@ -12,7 +12,7 @@ api = plantpredict.Api(
     client_secret="insert client_secret here"
 )
 
-# instantiate the prediction of interest specifying its ID and project ID (visible in the URL of that prediction
+# Instantiate the prediction of interest specifying its ID and project ID (visible in the URL of that prediction
 # in a web browser '.../projects/{project_id}/prediction/{id}/'). do the same for the project of interest.
 project_id = 13161   # CHANGE TO YOUR PROJECT ID
 prediction_id = 147813   # CHANGE TO YOUR PREDICTION ID

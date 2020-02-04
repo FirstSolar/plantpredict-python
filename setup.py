@@ -6,7 +6,7 @@ __readme__ = os.path.join(__currdir__, 'README.md')
 
 setup(
     name='plantpredict',
-    version='0.9.3',
+    version='0.9.4',
     description='Python SDK for PlantPredict (https://ui.plantpredict.com).',
     url='https://github.com/stephenkaplan/plantpredict-python',
     author='Stephen Kaplan, Performance & Prediction Engineer at First Solar, Inc.',
@@ -14,7 +14,7 @@ setup(
     license='LICENSE.txt',
     long_description=open(__readme__).read(),
     packages=['plantpredict'],
-    python_requires='>=3.6, <4',
+    python_requires='>=3.5, <4',
     install_requires=[
         'requests',
         'pandas',
