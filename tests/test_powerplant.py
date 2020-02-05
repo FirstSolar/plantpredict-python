@@ -78,9 +78,9 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
         self._make_mocked_api()
         powerplant = PowerPlant(api=self.mocked_api, project_id=7, prediction_id=77)
         powerplant.blocks = [
-            {'repeater': 1, 'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.91703056769, 'repeater': 3}]}]},
-            {'repeater': 1, 'arrays': [{'repeater': 2, 'inverters': [{'power_factor': 1, 'repeater': 1}]}]},
-            {'repeater': 1, 'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.95487627365, 'repeater': 1}]}]},
+            {'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.91703056769, 'repeater': 3}]}]},
+            {'arrays': [{'repeater': 2, 'inverters': [{'power_factor': 1, 'repeater': 1}]}]},
+            {'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.95487627365, 'repeater': 1}]}]},
         ]
 
         num_inverters = powerplant._calculate_num_inverters()
@@ -90,9 +90,9 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
         self._make_mocked_api()
         powerplant = PowerPlant(api=self.mocked_api, project_id=7, prediction_id=77)
         powerplant.blocks = [
-            {'repeater': 1, 'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.91703056769, 'repeater': 3}]}]},
-            {'repeater': 1, 'arrays': [{'repeater': 2, 'inverters': [{'power_factor': 1, 'repeater': 1}]}]},
-            {'repeater': 1, 'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.95487627365, 'repeater': 1}]}]},
+            {'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.91703056769, 'repeater': 3}]}]},
+            {'arrays': [{'repeater': 2, 'inverters': [{'power_factor': 1, 'repeater': 1}]}]},
+            {'arrays': [{'repeater': 1, 'inverters': [{'power_factor': 0.95487627365, 'repeater': 1}]}]},
         ]
 
         powerplant._calculate_and_set_average_power_factor()
