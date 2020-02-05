@@ -311,7 +311,7 @@ class PowerPlant(PlantPredictEntity):
         for block in self.blocks:
             for array in block['arrays']:
                 for inverter in array['inverters']:
-                    num_inverters.append(inverter['repeater'] * array['repeater'] * block['repeater'])
+                    num_inverters.append(inverter['repeater'] * array['repeater'])
 
         return sum(num_inverters)
 
