@@ -188,8 +188,6 @@ class PowerPlant(PlantPredictEntity):
                                 "tracking_type": TrackingTypeEnum.FIXED_TILT,
                                 "module_orientation": ModuleOrientationEnum.PORTRAIT,
                                 "tables_removed_for_pcs": 0,
-                                "ground_slope": 0,                                                  # units [%]
-                                "ground_slope_azimuth": 0,                                          # units [degrees]
                                 "modules_high": 4,
                                 "modules_wide": 18,
                                 "lateral_intermodule_gap": 0.02,                                    # units [m]
