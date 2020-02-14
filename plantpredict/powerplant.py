@@ -1407,7 +1407,11 @@ class PowerPlant(PlantPredictEntity):
                                                                 collector_bandwidth),
                 "field_width": self._calculate_dc_field_width(tracking_type, number_of_rows, post_to_post_spacing,
                                                               collector_bandwidth, tables_per_row, module_orientation,
-                                                              m.length, m.width, lateral_intermodule_gap, modules_wide)
+                                                              m.length, m.width, lateral_intermodule_gap, modules_wide),
+                "post_height": (post_height if post_height is not None
+                                else self._calculate_default_post_height(tracking_type, collector_bandwidth,
+                                                                         module_tilt, minimum_tracking_limit_angle_d,
+                                                                         maximum_tracking_limit_angle_d)),
             }
         )
 
@@ -1415,12 +1419,6 @@ class PowerPlant(PlantPredictEntity):
         if m.faciality == FacialityEnum.BIFACIAL:
             self.blocks[block_name - 1]["arrays"][array_name - 1]["inverters"][ord(inverter_name) - 65][
                 "dc_fields"][-1].update({
-                    "post_height": (
-                        post_height if post_height is not None
-                        else self._calculate_default_post_height(tracking_type, collector_bandwidth, module_tilt,
-                                                                 minimum_tracking_limit_angle_d,
-                                                                 maximum_tracking_limit_angle_d)
-                        ),
                     "structure_shading": structure_shading,
                     "backside_mismatch": backside_mismatch if backside_mismatch is not None else m.backside_mismatch
                 })
