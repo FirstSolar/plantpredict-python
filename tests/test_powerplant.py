@@ -782,7 +782,7 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "table_to_table_spacing": 0.0,
             "number_of_rows": 1,
             "table_length": 20.18,
-            "tables_per_row": 100.0,
+            "tables_per_row": 100,
             'field_length': 4.859999999999999,
             'field_width': 2019.98,
             'post_height': 2.234,
@@ -935,7 +935,8 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "table_length": 20.18,
             "tables_per_row": 100.0,
             'field_length': 4.859999999999999,
-            'field_width': 2019.98
+            'field_width': 2019.98,
+            'post_height': 2.215,
         })
 
     @mock.patch('plantpredict.plant_predict_entity.requests.get', new=mocked_requests.mocked_requests_get)
@@ -996,9 +997,10 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "table_to_table_spacing": 0.0,
             "number_of_rows": 1,
             "table_length": 20.18,
-            "tables_per_row": 100.0,
+            "tables_per_row": 100,
             'field_length': 2019.98,
-            'field_width': 4.859999999999999
+            'field_width': 4.859999999999999,
+            'post_height': 3.1044417311961854,
         })
 
     @mock.patch('plantpredict.plant_predict_entity.requests.get', new=mocked_requests.mocked_requests_get)
