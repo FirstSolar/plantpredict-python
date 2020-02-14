@@ -721,6 +721,11 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
 
         self.assertEqual(post_height, 2.299038105676658)
 
+    def test_calculate_modules_wide(self):
+        modules_wide = PowerPlant._calculate_modules_wide(strings_wide=3, modules_wired_in_series=6)
+
+        self.assertEqual(modules_wide, 18)
+
     @mock.patch('plantpredict.powerplant.PowerPlant._calculate_default_post_height', mock_calculate_default_post_height)
     @mock.patch('plantpredict.plant_predict_entity.requests.get', new=mocked_requests.mocked_requests_get)
     @mock.patch('plantpredict.project.requests.get', new=mocked_requests.mocked_requests_get)
