@@ -797,7 +797,7 @@ class PowerPlant(PlantPredictEntity):
 
     @staticmethod
     def _calculate_tables_per_row(field_dc_power, planned_module_rating, modules_high, modules_wide,
-                                  tables_removed_for_pcs, number_of_rows):
+                                  number_of_rows, tables_removed_for_pcs=0):
         """
         Calculates the number of tables (mounting structures) across per row of a DC field.
 
@@ -808,10 +808,11 @@ class PowerPlant(PlantPredictEntity):
         :param int modules_high: Number of modules high per table (number of ranks). Must be between :py:data:`1` and
                                  :py:data:`50`.
         :param int modules_wide: Number of modules across per table. Must be between :py:data:`1` and :py:data:`100`.
+        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
+                                   :py:data:`10000`.
         :param float tables_removed_for_pcs: Number of tables removed in DC field to make room for its power
                                              conditioning system (PCS). Must be between :py:data:`0` and :py:data:`50`.
-        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
-                                     :py:data:`10000`.
+                                             Defaults to :py:data:`0`.
         :return: Number of tables across per row of DC field.
         :rtype: float
         """
@@ -1099,11 +1100,11 @@ class PowerPlant(PlantPredictEntity):
                      module_orientation=None, module_azimuth=None, tracking_backtracking_type=None,
                      minimum_tracking_limit_angle_d=-60.0, maximum_tracking_limit_angle_d=60.0,
                      lateral_intermodule_gap=0.02, vertical_intermodule_gap=0.02, table_to_table_spacing=0.0,
-                     tables_removed_for_pcs=0, module_quality=None,
-                     module_mismatch_coefficient=None, light_induced_degradation=None, dc_wiring_loss_at_stc=1.5,
-                     dc_health=1.0, heat_balance_conductive_coef=None, heat_balance_convective_coef=None,
-                     sandia_conductive_coef=None, sandia_convective_coef=None, cell_to_module_temp_diff=None,
-                     tracker_load_loss=0.0, post_height=None, structure_shading=0.0, backside_mismatch=None):
+                     module_quality=None, module_mismatch_coefficient=None, light_induced_degradation=None,
+                     dc_wiring_loss_at_stc=1.5, dc_health=1.0, heat_balance_conductive_coef=None,
+                     heat_balance_convective_coef=None, sandia_conductive_coef=None, sandia_convective_coef=None,
+                     cell_to_module_temp_diff=None, tracker_load_loss=0.0, post_height=None, structure_shading=0.0,
+                     backside_mismatch=None):
         """
         A "power plant builder" helper method that adds a DC field to an inverter specified by :py:data:`inverter_name`,
         which is a child of the array  :py:data:`array_name`, which is a child of a block specified by
@@ -1186,8 +1187,6 @@ class PowerPlant(PlantPredictEntity):
                                                :py:data:`[m]'.
         :param float table_to_table_spacing: Space between tables in each row. Defaults to :py:data:`0.0`. Must be
                                              between :py:data:`0` and :py:data:`50`.
-        :param float tables_removed_for_pcs: Number of tables removed in DC field to make room for its power
-                                             conditioning system (PCS). Must be between :py:data:`0` and :py:data:`50`.
         :param module_quality: Accounts for any discrepancy between manufacturer nameplate rating of module and actual
                                performance. If left as default (:py:data:`None`), is automatically set as the
                                :py:attr:`module_quality` of the module model specified by :py:data:`module_id`. Must be
@@ -1336,7 +1335,6 @@ class PowerPlant(PlantPredictEntity):
             planned_module_rating=m.stc_max_power,
             modules_high=modules_high,
             modules_wide=modules_wide,
-            tables_removed_for_pcs=tables_removed_for_pcs,
             number_of_rows=number_of_rows
         )
         self.blocks[block_name - 1]["arrays"][array_name - 1]["inverters"][ord(inverter_name) - 65]["dc_fields"].append(
@@ -1388,7 +1386,6 @@ class PowerPlant(PlantPredictEntity):
                 "number_of_rows": number_of_rows,
                 "table_length": table_length,
                 "tables_per_row": tables_per_row,
-                "tables_removed_for_pcs": tables_removed_for_pcs,
                 "field_length": self._calculate_dc_field_length(tables_per_row, module_orientation, m.length, m.width,
                                                                 lateral_intermodule_gap, modules_wide, tracking_type,
                                                                 number_of_rows, post_to_post_spacing,

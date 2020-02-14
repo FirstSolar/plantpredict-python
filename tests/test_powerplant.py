@@ -472,10 +472,9 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             planned_module_rating=360,
             modules_high=4,
             modules_wide=18,
-            tables_removed_for_pcs=0,
-            number_of_rows=10.2469507659596
+            number_of_rows=10
         )
-        self.assertAlmostEqual(tables_per_row, 2.8, 1)
+        self.assertAlmostEqual(tables_per_row, 2.917, 3)
 
     def test_calculate_tables_per_row_with_tables_removed(self):
         tables_per_row = PowerPlant._calculate_tables_per_row(
@@ -483,18 +482,19 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             planned_module_rating=360,
             modules_high=4,
             modules_wide=18,
+            number_of_rows=10,
             tables_removed_for_pcs=1.0,
-            number_of_rows=10.2469507659596
+
         )
         self.assertAlmostEqual(tables_per_row, 3, 0)
 
     def test_calculate_dc_field_size_by_collector_bandwidth(self):
         dc_field_size = PowerPlant._calculate_dc_field_size_by_collector_bandwidth(
-            number_of_rows=10.2469507659596,
+            number_of_rows=10,
             post_to_post_spacing=9.799999999999997,
             collector_bandwidth=4.03
         )
-        self.assertAlmostEqual(dc_field_size, 94.65, 2)
+        self.assertAlmostEqual(dc_field_size, 92.23, 2)
 
     def test_calculate_dc_field_size_by_tables_per_row_landscape_module_orientation(self):
         dc_field_size = PowerPlant._calculate_dc_field_size_by_tables_per_row(
@@ -778,7 +778,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "number_of_rows": 1,
             "table_length": 20.18,
             "tables_per_row": 100.0,
-            "tables_removed_for_pcs": 0,
             'field_length': 4.859999999999999,
             'field_width': 2019.98,
             'post_height': 2.234,
@@ -845,7 +844,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "number_of_rows": 1,
             "table_length": 20.18,
             "tables_per_row": 100.0,
-            "tables_removed_for_pcs": 0,
             'field_length': 4.859999999999999,
             'field_width': 2019.98,
             'post_height': 1.5,
@@ -931,7 +929,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "number_of_rows": 1,
             "table_length": 20.18,
             "tables_per_row": 100.0,
-            "tables_removed_for_pcs": 0,
             'field_length': 4.859999999999999,
             'field_width': 2019.98
         })
@@ -995,7 +992,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "number_of_rows": 1,
             "table_length": 20.18,
             "tables_per_row": 100.0,
-            "tables_removed_for_pcs": 0,
             'field_length': 2019.98,
             'field_width': 4.859999999999999
         })
