@@ -810,7 +810,7 @@ class PowerPlant(PlantPredictEntity):
         :param int modules_wide: Number of modules across per table. Must be between :py:data:`1` and :py:data:`100`.
         :param float tables_removed_for_pcs: Number of tables removed in DC field to make room for its power
                                              conditioning system (PCS). Must be between :py:data:`0` and :py:data:`50`.
-        :param float number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`0.1` and
+        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                      :py:data:`10000`.
         :return: Number of tables across per row of DC field.
         :rtype: float
@@ -828,7 +828,7 @@ class PowerPlant(PlantPredictEntity):
         Calculates the DC field dimension from the front of the first table to the back of the last table (the first
         row to the last row).
 
-        :param float number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`0.1` and
+        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                      :py:data:`10000`.
         :param float post_to_post_spacing: Row spacing. Must be between :py:data:`0.0` and :py:data:`50.0` - units
                                            :py:data:`[m]`.
@@ -883,7 +883,7 @@ class PowerPlant(PlantPredictEntity):
         :param int modules_wide: Number of modules across per table. Must be between :py:data:`1` and :py:data:`100`.
         :param int tracking_type: Represents the tracking type/mounting structure (Fixed Tilt, Tracker, etc.) of the DC
                                   field. Use :py:class:`~plantpredict.enumerations.TrackingTypeEnum`.
-        :param float number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`0.1` and
+        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                      :py:data:`10000`.
         :param float post_to_post_spacing: Row spacing. Must be between :py:data:`0.0` and :py:data:`50.0` - units
                                            :py:data:`[m]`.
@@ -909,7 +909,7 @@ class PowerPlant(PlantPredictEntity):
 
         :param int tracking_type: Represents the tracking type/mounting structure (Fixed Tilt, Tracker, etc.) of the DC
                                   field. Use :py:class:`~plantpredict.enumerations.TrackingTypeEnum`.
-        :param float number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`0.1` and
+        :param int number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                      :py:data:`10000`.
         :param float post_to_post_spacing: Row spacing. Must be between :py:data:`0.0` and :py:data:`50.0` - units
                                            :py:data:`[m]`.
@@ -1139,9 +1139,9 @@ class PowerPlant(PlantPredictEntity):
         :param int modules_wired_in_series: The number of modules electrically connected in series in a string.
         :param float post_to_post_spacing: Row spacing. Must be between :py:data:`0.0` and :py:data:`50.0` - units
                                            :py:data:`[m]`.
-        :param number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`0.1` and
+        :param number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                :py:data:`10000`. Defaults to :py:data:`1`.
-        :type number_of_rows: float, None
+        :type number_of_rows: int, None
         :param modules_wide: Number of modules across per table. Must be between :py:data:`1` and :py:data:`100`. If
                              left as default (`None`) will be assigned value equal to
                              :py:data:`modules_wired_in_series`.
