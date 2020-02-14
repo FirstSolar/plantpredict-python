@@ -816,7 +816,7 @@ class PowerPlant(PlantPredictEntity):
                                              conditioning system (PCS). Must be between :py:data:`0` and :py:data:`50`.
                                              Defaults to :py:data:`0`.
         :return: Number of tables across per row of DC field.
-        :rtype: float
+        :rtype: int
         """
         module_count = 1000*field_dc_power / planned_module_rating
         modules_per_table = modules_high * modules_wide            # note: only a frontend value
@@ -1094,10 +1094,24 @@ class PowerPlant(PlantPredictEntity):
 
         return max(post_height, 1.5)
 
+    @staticmethod
+    def _calculate_modules_wide(strings_wide, modules_wired_in_series):
+        """
+        Calculates number of modules wide across table by multiplying the number of strings wide and modules per string.
+
+        :param int strings_wide: Number of strings across per table. Multiplied by :py:data:`modules_wired_in_series` to
+                                 determine :py:attr:`modules_wide`. Must result in :py:attr:`modules_wide` between
+                                 :py:data:`1` and  :py:data:`100`. Defaults to :py:data:`1`.
+        :param int modules_wired_in_series: The number of modules electrically connected in series in a string.
+        :return: Modules wide across per table.
+        :rtype: int
+        """
+        return strings_wide * modules_wired_in_series
+
     @handle_refused_connection
     @handle_error_response
     def add_dc_field(self, block_name, array_name, inverter_name, module_id, tracking_type, modules_high,
-                     modules_wired_in_series, post_to_post_spacing, number_of_rows=1, modules_wide=None,
+                     modules_wired_in_series, post_to_post_spacing, number_of_rows=1, strings_wide=1,
                      field_dc_power=None, number_of_series_strings_wired_in_parallel=None, module_tilt=None,
                      module_orientation=None, module_azimuth=None, tracking_backtracking_type=None,
                      minimum_tracking_limit_angle_d=-60.0, maximum_tracking_limit_angle_d=60.0,
@@ -1145,10 +1159,9 @@ class PowerPlant(PlantPredictEntity):
         :param number_of_rows: Number of rows of tables in DC field. Must be between :py:data:`1` and
                                :py:data:`10000`. Defaults to :py:data:`1`.
         :type number_of_rows: int, None
-        :param modules_wide: Number of modules across per table. Must be between :py:data:`1` and :py:data:`100`. If
-                             left as default (`None`) will be assigned value equal to
-                             :py:data:`modules_wired_in_series`.
-        :type modules_wide: int, None
+        :param int strings_wide: Number of strings across per table. Multiplied by :py:data:`modules_wired_in_series` to
+                                 determine :py:attr:`modules_wide`. Must result in :py:attr:`modules_wide` between
+                                 :py:data:`1` and  :py:data:`100`. Defaults to :py:data:`1`.
         :param field_dc_power: DC capacity of the DC field. Defaults to `None`. Non-null value required if
                                :py:data:`number_of_series_strings_wired_in_parallel` is `None` and  must be between
                                :py:data:`1` and :py:data:`20000` - units :py:data:`[kW]`.
@@ -1317,7 +1330,7 @@ class PowerPlant(PlantPredictEntity):
             modules_wired_in_series=modules_wired_in_series,
         )
         module_orientation = module_orientation if module_orientation is not None else m.default_orientation
-        modules_wide = modules_wide if modules_wide is not None else modules_wired_in_series
+        modules_wide = self._calculate_modules_wide(strings_wide, modules_wired_in_series)
         collector_bandwidth = self._calculate_collector_bandwidth(
             module_width=m.width,
             module_length=m.length,
