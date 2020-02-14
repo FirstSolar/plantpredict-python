@@ -1,4 +1,5 @@
 import copy
+import math
 import numpy as np
 
 from plantpredict.plant_predict_entity import PlantPredictEntity
@@ -799,7 +800,8 @@ class PowerPlant(PlantPredictEntity):
     def _calculate_tables_per_row(field_dc_power, planned_module_rating, modules_high, modules_wide,
                                   number_of_rows, tables_removed_for_pcs=0):
         """
-        Calculates the number of tables (mounting structures) across per row of a DC field.
+        Calculates the number of tables (mounting structures) across per row of a DC field. Rounds the result up to
+        the nearest next integer (ceiling function), as would be done automatically in the backend of PlantPredict.
 
         :param float field_dc_power: DC capacity of the DC field. Must be between :py:data:`1` and :py:data:`20000` -
                                      units `[kW]`.
@@ -821,7 +823,7 @@ class PowerPlant(PlantPredictEntity):
         total_tables = module_count / modules_per_table            # note: only a frontend value
         tables_per_row = (total_tables + tables_removed_for_pcs) / number_of_rows
 
-        return tables_per_row
+        return math.ceil(tables_per_row)    # rounds up to next greater integer
 
     @staticmethod
     def _calculate_dc_field_size_by_collector_bandwidth(number_of_rows, post_to_post_spacing, collector_bandwidth):
@@ -872,7 +874,7 @@ class PowerPlant(PlantPredictEntity):
         tracker array, and the "front to back" dimension from the front row to the back row of tables for a fixed tilt
         array.
 
-        :param float tables_per_row: Number of tables wide per row in the DC field.
+        :param int tables_per_row: Number of tables wide per row in the DC field.
         :param int module_orientation: Represents the orientation (portrait or landscape) of modules in the DC field.
                                        Use :py:class:`~plantpredict.enumerations.ModuleOrientationEnum`.
         :param float module_length: Length of each individual module in DC field. Must be between :py:data:`0` and
@@ -916,7 +918,7 @@ class PowerPlant(PlantPredictEntity):
                                            :py:data:`[m]`.
         :param float collector_bandwidth: The total width/depth of each table/row of modules in the DC field. Must be
                                           between :py:data:`0` and :py:data:`30` - units `[m]`.
-        :param float tables_per_row: Number of tables wide per row in the DC field.
+        :param int tables_per_row: Number of tables wide per row in the DC field.
         :param int module_orientation: Represents the orientation (portrait or landscape) of modules in the DC field.
                                        Use :py:class:`~plantpredict.enumerations.ModuleOrientationEnum`.
         :param float module_length: Length of each individual module in DC field. Must be between :py:data:`0` and

@@ -474,7 +474,7 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             modules_wide=18,
             number_of_rows=10
         )
-        self.assertAlmostEqual(tables_per_row, 2.917, 3)
+        self.assertEqual(tables_per_row, 3)
 
     def test_calculate_tables_per_row_with_tables_removed(self):
         tables_per_row = PowerPlant._calculate_tables_per_row(
@@ -486,7 +486,7 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             tables_removed_for_pcs=1.0,
 
         )
-        self.assertAlmostEqual(tables_per_row, 3, 0)
+        self.assertEqual(tables_per_row, 4)
 
     def test_calculate_dc_field_size_by_collector_bandwidth(self):
         dc_field_size = PowerPlant._calculate_dc_field_size_by_collector_bandwidth(
