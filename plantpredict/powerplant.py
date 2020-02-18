@@ -892,7 +892,7 @@ class PowerPlant(PlantPredictEntity):
                                            :py:data:`[m]`.
         :param float collector_bandwidth: The total width/depth of each table/row of modules in the DC field. Must be
                                           between :py:data:`0` and :py:data:`30` - units `[m]`.
-        :return: DC field length - units `[m]`.
+        :return: DC field length - units py:data:`[m]`.
         :rtype: float
         """
         if tracking_type == TrackingTypeEnum.HORIZONTAL_TRACKER:
@@ -927,9 +927,9 @@ class PowerPlant(PlantPredictEntity):
                                    :py:data:`10000` - units `[mm]`.
         :param float lateral_intermodule_gap: Lateral gap between each module on the mounting structure. Must be between
                                               :py:data:`0` and py:data:`1` - units `[m]'.
-        :param int or float modules_wide: Number of modules across per table. Must be between :py:data:`1` and
+        :param int modules_wide: Number of modules across per table. Must be between :py:data:`1` and
                                        :py:data:`100`.
-        :return: DC field width - units `[m]`.
+        :return: DC field width - units :py:data:`[m]`.
         :rtype: float
         """
         if tracking_type == TrackingTypeEnum.HORIZONTAL_TRACKER:
@@ -1358,8 +1358,6 @@ class PowerPlant(PlantPredictEntity):
                                 ord(inverter_name) - 65]["dc_fields"]) + 1,
                 "module_id": module_id,
                 "tracking_type": tracking_type,
-                "module_tilt": module_tilt,
-                "tracking_backtracking_type": tracking_backtracking_type,
                 "minimum_tracking_limit_angle_d": minimum_tracking_limit_angle_d,
                 "maximum_tracking_limit_angle_d": maximum_tracking_limit_angle_d,
                 "module_orientation": module_orientation,
@@ -1414,6 +1412,16 @@ class PowerPlant(PlantPredictEntity):
                                                                          maximum_tracking_limit_angle_d)),
             }
         )
+
+        # add module tilt if fixed tilt
+        if tracking_type == TrackingTypeEnum.FIXED_TILT:
+            self.blocks[block_name - 1]["arrays"][array_name - 1]["inverters"][ord(inverter_name) - 65][
+                "dc_fields"][-1].update({"module_tilt": module_tilt})
+
+        # add backtracking type if horizontal tracker
+        if tracking_type == TrackingTypeEnum.HORIZONTAL_TRACKER:
+            self.blocks[block_name - 1]["arrays"][array_name - 1]["inverters"][ord(inverter_name) - 65][
+                "dc_fields"][-1].update({"tracking_backtracking_type": tracking_backtracking_type})
 
         # add bifacial parameters if module is bifacial
         if m.faciality == FacialityEnum.BIFACIAL:

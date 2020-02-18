@@ -194,7 +194,7 @@ Prepare the field DC power and post to post spacing for the tracker DC field, an
 
 .. code-block:: python
 
-    field_dc_power = powerplant.calculate_field_dc_power_from_dc_ac_ratio(dc_ac_ratio=1.1, setpoint_kw=720.0)
+    field_dc_power = powerplant.calculate_field_dc_power_from_dc_ac_ratio(dc_ac_ratio=1.1, inverter_setpoint=720.0)
     post_to_post_spacing = powerplant.calculate_post_to_post_spacing_from_gcr(ground_coverage_ratio=0.20, module_id=298,
                                                                               modules_high=1)
 
