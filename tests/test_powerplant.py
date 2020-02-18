@@ -538,16 +538,16 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
     def test_calculate_dc_field_width_tracker(self, mock_calculate_dc_field_size_by_collector_bandwidth):
         self._make_mocked_api()
         powerplant = PowerPlant(self.mocked_api)
-        powerplant._calculate_dc_field_width(TrackingTypeEnum.HORIZONTAL_TRACKER, 2, 1962, 900, 0.02, 18,
-                                             ModuleOrientationEnum.PORTRAIT, 1, 1.5, 4.03)
+        powerplant._calculate_dc_field_width(TrackingTypeEnum.HORIZONTAL_TRACKER, 1, 1.5, 4.03, 2,
+                                             ModuleOrientationEnum.PORTRAIT, 1962, 900, 0.02, 18)
         self.assertTrue(mock_calculate_dc_field_size_by_collector_bandwidth.called)
 
     @mock.patch('plantpredict.powerplant.PowerPlant._calculate_dc_field_size_by_tables_per_row')
     def test_calculate_dc_field_width_fixed_tilt(self, mock_calculate_dc_field_size_by_tables_per_row):
         self._make_mocked_api()
         powerplant = PowerPlant(self.mocked_api)
-        powerplant._calculate_dc_field_width(TrackingTypeEnum.FIXED_TILT, 2, 1962, 900, 0.02, 18,
-                                             ModuleOrientationEnum.PORTRAIT, 1, 1.5, 4.03)
+        powerplant._calculate_dc_field_width(TrackingTypeEnum.FIXED_TILT, 1, 1.5, 4.03, 2,
+                                             ModuleOrientationEnum.PORTRAIT, 1962, 900, 0.02, 18)
         self.assertTrue(mock_calculate_dc_field_size_by_tables_per_row.called)
 
     def test_validate_dc_field_sizing_both_specified(self):
@@ -752,7 +752,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "module_id": 456,
             "tracking_type": TrackingTypeEnum.FIXED_TILT,
             "module_tilt": 30,
-            "tracking_backtracking_type": None,
             "minimum_tracking_limit_angle_d": -60.0,
             "maximum_tracking_limit_angle_d": 60.0,
             "module_orientation": ModuleOrientationEnum.LANDSCAPE,
@@ -818,7 +817,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "module_id": 456,
             "tracking_type": TrackingTypeEnum.FIXED_TILT,
             "module_tilt": 30,
-            "tracking_backtracking_type": None,
             "minimum_tracking_limit_angle_d": -60.0,
             "maximum_tracking_limit_angle_d": 60.0,
             "module_orientation": ModuleOrientationEnum.LANDSCAPE,
@@ -903,7 +901,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "module_id": 123,
             "tracking_type": TrackingTypeEnum.FIXED_TILT,
             "module_tilt": 30,
-            "tracking_backtracking_type": None,
             "minimum_tracking_limit_angle_d": -60.0,
             "maximum_tracking_limit_angle_d": 60.0,
             "module_orientation": ModuleOrientationEnum.LANDSCAPE,
@@ -966,7 +963,6 @@ class TestPowerPlant(plantpredict_unit_test_case.PlantPredictUnitTestCase):
             "name": 2,
             "module_id": 123,
             "tracking_type": TrackingTypeEnum.HORIZONTAL_TRACKER,
-            "module_tilt": None,
             "tracking_backtracking_type": BacktrackingTypeEnum.BACKTRACKING,
             "minimum_tracking_limit_angle_d": -60.0,
             "maximum_tracking_limit_angle_d": 60.0,
