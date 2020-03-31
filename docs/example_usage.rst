@@ -5,7 +5,7 @@ Example Usage
 
 The code snippets below are practical examples of useful tasks accomplished via PlantPredict's API. All of the code
 used in the examples below is available via `the source code on Github
-<https://github.com/stephenkaplan/plantpredict-python/tree/master/example_usage>`_. Feel free to use and modify the
+<https://github.com/FirstSolar/plantpredict-python/tree/master/example_usage>`_. Feel free to use and modify the
 code in your local environment.
 
 Every example assumes that you first :code:`import plantpredict` and authenticate with
