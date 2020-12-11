@@ -10,4 +10,4 @@ Install **development version** via Github master branch.
 
 Documentation can be found at https://plantpredict-python.readthedocs.io
 
-Email **samanatha.wilson@firstsolar.com** to sign-up for important email updates.
+Email **support@plantpredict.com** to sign-up for important email updates.
