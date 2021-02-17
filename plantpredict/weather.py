@@ -3,6 +3,7 @@ import requests
 from plantpredict.plant_predict_entity import PlantPredictEntity
 from plantpredict.error_handlers import handle_refused_connection, handle_error_response
 from plantpredict.utilities import convert_json, camel_to_snake, snake_to_camel
+from plantpredict.enumerations import EntityTypeEnum
 
 
 class Weather(PlantPredictEntity):
@@ -183,3 +184,29 @@ class Weather(PlantPredictEntity):
         self.id = json.loads(response.content)['id'] if 200 <= response.status_code < 300 else None
 
         return response
+
+        @handle_refused_connection
+    @handle_error_response
+    def change_status(self, new_status, note=""):
+        """
+        POST /Weather/Status
+
+        Change the status (and resulting sharing/privacy settings) of a weather file (ex. from py:attr:`DRAFT_PRIVATE` to
+        py:attr:`DRAFT-SHARED`.
+
+        :param int new_status: Enumeration representing status to change weather to. See (or import)
+                               :py:class:`plantpredict.enumerations.LibraryStatusEnum`.
+        :param str note: Description of reason for change.
+        :return:
+        """
+        return requests.post(
+            url=self.api.base_url + "/Weather/Status",
+            headers={"Authorization": "Bearer " + self.api.access_token},
+            json=[{
+                "name": self.name,
+                "id": self.id,
+                "type": EntityTypeEnum.WEATHER,
+                "status": new_status,
+                "note": note
+            }]
+        )
